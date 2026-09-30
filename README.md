@@ -153,4 +153,5 @@ json은 key-value 형식으로 써야한다
    - @Column: 컬럼의 제약 조건(NOT NULL, 길이 제한, TEXT 타입 등)을 설정합니다.
 
 3. @NoArgsConstructor는 필수다.
+- json을 자바객체로 바꾸는데 기본생성자는 필수.
 - JPA가 데이터베이스에서 select를 하고 자바 객체로 복원할 때 아무런 파라미터가 없는 기본생성자가 반드시 필요하기 때문이다.
