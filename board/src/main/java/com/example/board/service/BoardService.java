@@ -1,12 +1,15 @@
 package com.example.board.service;
 
 import com.example.board.dto.BoardCreateRequestDto;
+import com.example.board.dto.BoardResponseDto;
 import com.example.board.dto.BoardUpdateRequestDto;
 import com.example.board.entity.Board;
 import com.example.board.repository.BoardRepository;
-import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+import java.util.ArrayList;
+import java.util.List;
 
 @Service
 @RequiredArgsConstructor
@@ -21,6 +24,21 @@ public class BoardService {
         Board saveBoard = boardRepository.save(board);
 
         return saveBoard.getId();
+    }
+
+    @Transactional(readOnly = true)
+    public BoardResponseDto findById(Long id){
+        Board board = boardRepository.findById(id)
+                .orElseThrow(() -> new IllegalArgumentException("해당 게시글이 없습니다."));
+
+        return new BoardResponseDto(board);
+    }
+
+    @Transactional(readOnly = true)
+    public List<BoardResponseDto> findAll(){
+        return boardRepository.findAll()
+                .stream().map(BoardResponseDto::new)
+                .toList();
     }
 
     // 1. 게시글 수정 (UPDATE)

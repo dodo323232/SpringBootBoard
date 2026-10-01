@@ -1,6 +1,7 @@
 package com.example.board.dto;
 
 
+import com.example.board.entity.Board;
 import lombok.Data;
 
 @Data
@@ -10,15 +11,11 @@ public class BoardResponseDto {
     private String content;
     private String writer;
 
-    public BoardResponseDto(
-            Long id,
-            String title,
-            String content,
-            String writer
-    ) {
-        this.id = id;
-        this.title = title;
-        this.content = content;
-        this.writer = writer;
+    public BoardResponseDto(Board board) {
+        this.id = board.getId();
+        this.title = board.getTitle();
+        this.content = board.getContent();
+        this.writer = board.getWriter();
     }
+
 }

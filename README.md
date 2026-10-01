@@ -34,6 +34,10 @@ Spring 프로젝트는 [start.spring.io](https://start.spring.io)에 들어가�
 ### `@Transactional` (메서드 위)
 
 - Service 계층에 CRUD를 만들 때 트랜잭션을 지키기 위해 사용한다
+
+### `@RequiredArgsConstructor` (클래스 위)
+
+- final이 붙어있거나 @NonNull이 지정된 필드를 매개변수로 받는 생성자를 자동으로 만들어줌
 ---
 
 ## GET 좀 더 알아보기
