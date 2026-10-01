@@ -2,34 +2,21 @@
 <project version="4">
   <component name="CompilerConfiguration">
     <annotationProcessing>
-<<<<<<< HEAD
-=======
       <profile default="true" name="Default" enabled="true" />
->>>>>>> 644c4fa80840ef17d76c661431ce0769f7bb0976
       <profile name="Gradle Imported" enabled="true">
         <outputRelativeToContentRoot value="true" />
         <processorPath useClasspath="false">
           <entry name="$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.projectlombok/lombok/1.18.46/a5cfe99fdf320e84955ef653f2ce1bf789d11385/lombok-1.18.46.jar" />
         </processorPath>
-<<<<<<< HEAD
-        <module name="board.main" />
-=======
         <module name="com.example.board.main" />
->>>>>>> 644c4fa80840ef17d76c661431ce0769f7bb0976
       </profile>
     </annotationProcessing>
   </component>
   <component name="JavacSettings">
     <option name="ADDITIONAL_OPTIONS_OVERRIDE">
-<<<<<<< HEAD
-      <module name="board" options="-parameters" />
-      <module name="board.main" options="-parameters" />
-      <module name="board.test" options="-parameters" />
-=======
       <module name="com.example.board" options="-parameters" />
       <module name="com.example.board.main" options="-parameters" />
       <module name="com.example.board.test" options="-parameters" />
->>>>>>> 644c4fa80840ef17d76c661431ce0769f7bb0976
     </option>
   </component>
 </project>
