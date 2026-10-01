@@ -31,6 +31,9 @@ Spring 프로젝트는 [start.spring.io](https://start.spring.io)에 들어가�
 - GET 요청이 이 주소로 오면 메서드가 답하도록 연결해 준다.
 - 주소를 적지 않으면 클래스의 기본 주소(루트)에 이 메서드가 연결된다.
 
+### `@Transactional` (메서드 위)
+
+- Service 계층에 CRUD를 만들 때 트랜잭션을 지키기 위해 사용한다
 ---
 
 ## GET 좀 더 알아보기
@@ -139,19 +142,33 @@ json은 key-value 형식으로 써야한다
 
 ---
 
-### JPA & Entity 개념
+### 계층형 아키텍처
 
 1. JPA
    - 자바코드와 데이터베이스 사이에 자동 번역기
+   - 자바 객체와 데이터 태이블을 매핑하는 것
    - SQL을 직접 짜지 않고 메서드를 활용해서 SQL문을 쓸 수 있음
 
+   
 2. Entity
-   - 자바의 클래스를 데이터베이스 구조로 매핑하는 것
+   - 자바의 클래스를 데이터베이스 구조로 1 : 1 매핑하는 것
    - @Entity: 클래스 위에 씀으로써 클래스를 데이터베이스 구조로 만들 수 있다 (클래스와 데이터베이스가 1:1로 매핑되는 객체라는 것을 JPA에 알려주는 것)
    -  @Id: DB 테이블의 Primary Key(기본키/고유 식별자)로 지정합니다.
    - @GeneratedValue(strategy = GenerationType.IDENTITY): ID 번호를 DB가 1, 2, 3... 순서대로 자동으로 1씩 증가시켜 주도록 설정합니다.
    - @Column: 컬럼의 제약 조건(NOT NULL, 길이 제한, TEXT 타입 등)을 설정합니다.
 
-3. @NoArgsConstructor는 필수다.
-- json을 자바객체로 바꾸는데 기본생성자는 필수.
-- JPA가 데이터베이스에서 select를 하고 자바 객체로 복원할 때 아무런 파라미터가 없는 기본생성자가 반드시 필요하기 때문이다.
+3. Repository
+   - Entity에 의해 생성된 데이터베이스에 접근해서 데이터를 관리하는 `인터페이스`
+
+4. Controller
+   - 사용자의 요청을 받아 처리한 후 그 결과를 응답하는 역할
+
+5. Service
+   - Repository를 사용하여 데이터베이스에 직접 CRUD 작업 수행함.
+
+6. @NoArgsConstructor는 필수다.
+   - json을 자바객체로 바꾸는데 기본생성자는 필수.
+   - Service에서 Repository로 FindById를 실행 할 시 DB는 이 요청을 받고 표 형태를 Entity에 돌려 준다(JPA) 이때 자바 객체로 데이터를 바꾸기 위해선 기본 생성자가 필요하기 때문에 @NoArgsConstructor를 써야함. 
+   - JPA가 데이터베이스에서 select를 하고 자바 객체로 복원할 때 아무런 파라미터가 없는 기본생성자가 반드시 필요하기 때문이다.
+
+- 보통 계층형 아키텍처에서 순서는 Controller Service Repository 순으로 이어진다

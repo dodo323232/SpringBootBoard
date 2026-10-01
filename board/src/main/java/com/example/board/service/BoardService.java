@@ -35,4 +35,13 @@ public class BoardService {
 
         return id;
     }
+
+    @Transactional
+    public Long delete(Long id){
+        Board board = boardRepository.findById(id) // optional로 받음 (null이 있을 수 있으니깐)
+                .orElseThrow(() -> new IllegalArgumentException("해당 게시글이 없습니다. id=" + id));
+        boardRepository.delete(board);
+
+        return id;
+    }
 }
