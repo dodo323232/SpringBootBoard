@@ -176,3 +176,81 @@ json은 key-value 형식으로 써야한다
    - JPA가 데이터베이스에서 select를 하고 자바 객체로 복원할 때 아무런 파라미터가 없는 기본생성자가 반드시 필요하기 때문이다.
 
 - 보통 계층형 아키텍처에서 순서는 Controller Service Repository 순으로 이어진다
+
+---
+
+### 개발일지
+
+## 1일차
+
+Service는 혼자서 DB 작업을 할 수 없기때문에 Repository가 반드시 필요한다.
+
+그래서 Service 계층에서 객체 생성을 하고 @RequiredArgsConstructor를 사용하여
+Service 생성자에 Repository를 param으로 받게 만든다. (this.repository = repository로 되어있음)
+
+Controller에서 이 서비스를 불러올때도 똑같이 @RequiredArgsConstructor를 사용해서 만든다
+
+Spring은 이렇게 생성자를 만들었을때 main을 실행하는 순간
+@Repository, @Service @RestController가 붙은 클래스를 찾아가 생성자에 파라미터를 직접 넣어준다.
+
+Board board = boardRepository.findById(id)
+                .orElseThrow(() -> new IllegalArgumentException("해당 게시글이 없습니다. id=" + id));
+
+findById(id)는 값이 있을 수도 없을수도 있는 상자인 Optional<Board로 돌려준다.> 여기서 Board는 Entity
+id가 없을때 orElseThrow가 발생되고 예외를 던져준다.
+
+orElseThrow 안에 ()는 매개변수가 없다는 뜻 (람다식)
+
+---
+
+Controller에서 findbyid로 지정한 id의 컬럼들을 보고 싶을땐 그냥 dto 객체만 반환 시키면 
+spring이 알아서 json으로 자동 변환 시켜줌.
+
+---
+
+- 서비스
+ @Transactional
+    public List<Board> findAll(){
+        return boardRepository.findAll();
+    }
+- 컨트롤러
+@GetMapping
+    public List<Board> findAllView(){
+        return boardService.findAll();
+    }
+
+이렇게 쓰면 Entity를 리스트로 그대로 반환하는 보안문제가 생긴다
+예시로 Entity 데이터베이스 구조에 비밀번호가 있다고 치자 그럴때 이 코드를 쓰면 비밀번호가 유출되는 사고가
+일어날 수 있다.
+
+또 @Transactional은 데이터를 변경할때 실패하면 되돌리기 위해 쓰는거여서 안써도 된다
+대신 @Transactional(readOnly = true)를 써야함.
+
+이 문제를 해결하기 위해서 서비스 계층에 findAll 메서드를 바꿔야한다
+반환값을 Entity 말고 Dto로 바꿔야 하는데 바꾸기 위해선 .stream(), .map(), .toList가 필요했다.
+.stream은 list, set 등 데이터를 람다식으로 map, filter, collect 할때 필요하다
+.map은 데이터 하나하나 꺼내서 어떤 값으로 바꾸기 가능
+.toList는 리스트로 반환하기
+map 안에 람다식으로 board -> new BoardResponseDto(board)라고 썼었으나 
+람다식에서 파라미터를 생성자에 바로 넘겨주는 기본 람다식은 클래스명 :: new로 축약 가능하다.
+(Board :: new)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
