@@ -21,6 +21,7 @@ dependencies {
 	implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
 	implementation 'org.springframework.boot:spring-boot-starter-jdbc'
 	implementation 'org.springframework.boot:spring-boot-starter-webmvc'
+	implementation 'org.springframework.boot:spring-boot-starter-security'
 	// JPA (Java Persistence API) 추가
 	implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
 	// H2 Database (개발용 인메모리 DB) 추가

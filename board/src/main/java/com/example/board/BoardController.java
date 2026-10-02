@@ -3,7 +3,6 @@ package com.example.board;
 import com.example.board.dto.BoardCreateRequestDto;
 import com.example.board.dto.BoardResponseDto;
 import com.example.board.dto.BoardUpdateRequestDto;
-import com.example.board.entity.Board;
 import com.example.board.service.BoardService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
